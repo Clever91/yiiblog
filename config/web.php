@@ -50,8 +50,8 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
-            'enablePrettyUrl' => false,
-            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+            'showScriptName' => true,
             'rules' => [
                 // '' => "site/index",
             ],

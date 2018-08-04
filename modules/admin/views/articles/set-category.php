@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Set Category');
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group">
-	    <?= Html::dropDownList('category', $model->category->id, $categories, [
+	    <?= Html::dropDownList('category', $model->category ? $model->category->id : null, $categories, [
 	    	'class' => 'form-control',
 	    	'prompt' => 'Select category'
 	    ]) ?>

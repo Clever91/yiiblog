@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'category_id',
-                'value' => $model->category->title,
+                'value' => $model->category ? $model->category->title : null,
             ],
             'title',
             'description:ntext',
