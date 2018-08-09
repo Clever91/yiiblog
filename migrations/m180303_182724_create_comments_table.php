@@ -23,14 +23,14 @@ class m180303_182724_create_comments_table extends Migration
 
         // // create index for column 'article_id'
         // $this->createIndex(
-        //     'idx-c-article-article_id',
+        //     'idx-c-commants-article_id',
         //     'comments',
         //     'article_id'
         // );
 
         // // add foreign key for table 'articles'
         // $this->addForeignKey(
-        //     'fk-c-article-article_id',
+        //     'fk-c-comments-article_id',
         //     'comments',
         //     'article_id',
         //     'articles',
@@ -40,14 +40,14 @@ class m180303_182724_create_comments_table extends Migration
 
         // create index for column 'user_id'
         $this->createIndex(
-            'idx-c-users-user_id',
+            'idx-c-comments-user_id',
             'comments',
             'user_id'
         );
 
         // add foreign key for table 'users'
         $this->addForeignKey(
-            'fk-c-users-user_id',
+            'fk-c-comments-user_id',
             'comments',
             'user_id',
             'users',
@@ -61,10 +61,12 @@ class m180303_182724_create_comments_table extends Migration
      */
     public function safeDown()
     {
-        // $this->dropForeignKey("fk-c-article-article_id");
-        // $this->dropForeignKey("fk-c-users-user_id");
-        // $this->dropIndex("idx-c-article-article_id");
-        // $this->dropIndex("idx-c-users-user_id");
+        $this->dropForeignKey("fk-c-comments-article_id");
+        $this->dropIndex("idx-c-comments-article_id");
+
+        $this->dropForeignKey("fk-c-comments-user_id");
+        $this->dropIndex("idx-c-comments-user_id");
+
         $this->dropTable('comments');
     }
 }

@@ -74,14 +74,16 @@ class ArticlesController extends Controller
     public function actionCreate()
     {
         $model = new Articles();
+        $categories = Categories::find()->all();
+        $listData = ArrayHelper::map($categories, 'id', 'title');
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->user_id = Yii::$app->user->id;
+            $model->user_id = Yii::$app->user->identity->id;
             $model->viewed = self::VIEWED_DEFAULT;
             $model->status = self::STATUS_ACTIVE;
 
-            if ($model->saveArticle()) {
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 print_r($model->getErrors()); exit();
@@ -90,6 +92,7 @@ class ArticlesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'listData' => $listData
         ]);
     }
 
@@ -103,6 +106,8 @@ class ArticlesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $categories = Categories::find()->all();
+        $listData = ArrayHelper::map($categories, 'id', 'title');
 
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -110,6 +115,7 @@ class ArticlesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'listData' => $listData
         ]);
     }
 
@@ -151,7 +157,9 @@ class ArticlesController extends Controller
         if (Yii::$app->request->isPost)
         {
             if ($model->uploadImage()) {
-                $article->saveImage($model->getNewName());
+
+                $image = $model->getNewImageName();
+                $article->saveImage($image);
                 
                 return $this->redirect(['view', 'id' => $article->id]);
             }

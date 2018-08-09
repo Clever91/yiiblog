@@ -42,7 +42,7 @@ class Articles extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'title', 'description', 'content'], 'required'],
-            [['user_id', 'viewed', 'status'], 'integer'],
+            [['user_id', 'category_id', 'viewed', 'status'], 'integer'],
             [['description', 'content'], 'string'],
             [['updated', 'created'], 'safe'],
             [['updated', 'created'], 'date', 'format' => 'php:Y-m-d H:i:s'],
@@ -74,7 +74,9 @@ class Articles extends \yii\db\ActiveRecord
         ];
     }
 
+
     // ~~~~~~~~~~~~~~~~~~~~~ Save Functions ~~~~~~~~~~~~~~~~~~~~~
+
 
     public function saveArticle()
     {
@@ -115,11 +117,14 @@ class Articles extends \yii\db\ActiveRecord
         }
     }
 
+
     // ~~~~~~~~~~~~~~~~~~~~~ Get Functions ~~~~~~~~~~~~~~~~~~~~~
+
 
     public function getSelectedTags()
     {
         $tags = $this->getTags()->select('id')->asArray()->all();
+
         return ArrayHelper::getColumn($tags, 'id');
     }
 
@@ -144,15 +149,28 @@ class Articles extends \yii\db\ActiveRecord
     {
         $model = new UploadImage($this->image);
 
-        return $model->getImage();
+        return $model->getImageWithPath();
     }
+
+    public function getStatus()
+    {
+        return [
+            1 => 'Active',
+            0 => 'No Active'
+        ];
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~ Delete Function ~~~~~~~~~~~~~~~~~~~~~
+
 
     public function deleteCurrectTags()
     {
         ArticleTag::deleteAll(['article_id' => $this->id]);
     }
 
+
     // ~~~~~~~~~~~~~~~~~~~~~ Relations Start ~~~~~~~~~~~~~~~~~~~~~
+
 
     public function getCategory()
     {
@@ -172,7 +190,9 @@ class Articles extends \yii\db\ActiveRecord
         return $this->hasMany(Tags::className(), ['id' => 'tag_id'])->viaTable('article_tag', ['article_id' => 'id']);
     }
 
+
     // ~~~~~~~~~~~~~~~~~~~~~ Extent Functions ~~~~~~~~~~~~~~~~~~~~~
+
 
     public function beforeDelete() 
     {

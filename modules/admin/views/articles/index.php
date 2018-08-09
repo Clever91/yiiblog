@@ -26,13 +26,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'user_id',
-            'category_id',
+            // 'id',
             'title',
             'description:ntext',
+            [
+                'label' => 'user_id',
+                'value' => function($data) {
+                    return $data->user->username;
+                }
+            ],
+            [
+                'label' => 'category_id',
+                'value' => function($data) {
+                    return ($data->category) ? $data->category->title : null;
+                }
+            ],
             //'content:ntext',
-            //'status',
+            [
+                'label' => 'status',
+                'value' => function($data) {
+                    $data2 = $data->getStatus();
+                    return $data2[$data->status];
+                }
+            ],
             [
                 'format' => 'html',
                 'label' => 'image',

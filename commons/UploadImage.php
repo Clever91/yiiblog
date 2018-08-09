@@ -36,27 +36,20 @@ class UploadImage extends Model
 		$this->image = UploadedFile::getInstance($this, 'image');
 		
 		if ($this->validate()) {
-			if ($this->old_name) {
-				$this->deleteImageWhenExists();
-			}
-			
-			if ($this->image) {
-				$this->new_name = $this->generateImageName();
-				$this->image->saveAs($this->getImagePath() . $this->new_name);
 
-				return true;
-			}
+			$this->deleteImageWhenExists();
+
+			$this->setNewImageName();
+			
+			$this->saveImage();
+
+			return true;
 		}
 
 		return false;
 	}
 
-	public function getNewName()
-	{
-		return $this->new_name;
-	}
-
-	public function getImage()
+	public function getImageWithPath()
 	{
 		$path = $this->getImagePath() . $this->old_name;
 
@@ -67,10 +60,25 @@ class UploadImage extends Model
 		return self::IMAGE_PATH . self::NO_IMAGE;
 	}
 
-	public function deleteImage()
+	public function saveImage()
 	{
-		$this->deleteImageWhenExists();
+		$image = $this->getImagePath() . $this->getNewImageName();
+		
+		$this->image->saveAs($image);
 	}
+
+	public function getNewImageName()
+	{
+		return $this->new_name;
+	}
+
+	// ~~~~~~~~~~~~~~ PRIVATE ~~~~~~~~~~~~~~
+
+
+	public function setNewImageName() 
+	{
+		$this->new_name = $this->generateImageName();
+	} 	
 
 	private function getImagePath()
 	{
@@ -84,7 +92,7 @@ class UploadImage extends Model
 
 	private function deleteImageWhenExists() 
     {
-        if (!empty($this->old_name) && $this->old_name != null) {
+        if (!empty($this->old_name) && !is_null($this->old_name)) {
 	        $path = $this->getImagePath() . $this->old_name;
 			
 	        if ($this->isExistsImage($path))

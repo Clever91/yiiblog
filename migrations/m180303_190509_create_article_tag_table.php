@@ -20,14 +20,14 @@ class m180303_190509_create_article_tag_table extends Migration
 
         // create index for column 'article_id'
         $this->createIndex(
-            'idx-at-article-article_id',
+            'idx-a-article_tag-article_id',
             'article_tag',
             'article_id'
         );
 
         // add foreign key for table 'articles'
         $this->addForeignKey(
-            'fk-at-article-article_id',
+            'fk-a-article_tag-article_id',
             'article_tag',
             'article_id',
             'articles',
@@ -37,14 +37,14 @@ class m180303_190509_create_article_tag_table extends Migration
 
         // create index for column 'tag_id'
         $this->createIndex(
-            'idx-at-tag-tag_id',
+            'idx-a-article_tag-tag_id',
             'article_tag',
             'tag_id'
         );
 
         // add foreign key for table 'tags'
         $this->addForeignKey(
-            'fk-at-tag-tag_id',
+            'fk-a-article_tag-tag_id',
             'article_tag',
             'tag_id',
             'tags',
@@ -58,6 +58,12 @@ class m180303_190509_create_article_tag_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('fk-a-article_tag-article_id');
+        $this->dropIndex('idx-a-article_tag-article_id');
+
+        $this->dropForeignKey('fk-a-article_tag-tag_id');
+        $this->dropIndex('idx-a-article_tag-tag_id');
+
         $this->dropTable('article_tag');
     }
 }
