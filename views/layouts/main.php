@@ -45,7 +45,7 @@ WebAsset::register($this);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= Url::toRoute('/') ?>"><img src="<?= Url::base(true) ?>/images/logo.jpg" alt=""></a>
+                <a class="navbar-brand" href="<?= Url::toRoute('/') ?>"><img src="<?= Url::base(true) ?>/images/logo.jpeg" alt=""></a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -229,7 +229,7 @@ WebAsset::register($this);
         <div class="row">
             <div class="col-md-4">
                 <aside class="footer-widget">
-                    <div class="about-img"><img src="<?= Url::base(true) ?>/images/logo2.png" alt=""></div>
+                    <div class="about-img"><img src="<?= Url::base(true) ?>/images/logo2.jpeg" alt=""></div>
                     <div class="about-content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed voluptua. At vero eos et
                         accusam et justo duo dlores et ea rebum magna text ar koto din.
@@ -342,8 +342,8 @@ WebAsset::register($this);
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="text-center">&copy; 2015 <a href="#">Treasure PRO, </a> Built with <i
-                            class="fa fa-heart"></i> by <a href="#">Rahim</a>
+                    <div class="text-center">&copy; <?= date("Y") ?> <a href="<?= Url::toRoute('/') ?>">Yii Blog, </a> Built with <i
+                            class="fa fa-heart"></i> by <a href="https://telegram.me/CleverUzbek">@CleverUzbek</a>
                     </div>
                 </div>
             </div>
