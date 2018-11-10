@@ -27,6 +27,11 @@ use yii\helpers\ArrayHelper;
  */
 class Articles extends \yii\db\ActiveRecord
 {
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_NO_ACTIVE = 0;
+    const VIEWED_DEFAULT = 0;
+
     /**
      * @inheritdoc
      */
@@ -155,8 +160,8 @@ class Articles extends \yii\db\ActiveRecord
     public function getStatus()
     {
         return [
-            1 => 'Active',
-            0 => 'No Active'
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_NO_ACTIVE => 'No Active'
         ];
     }
 
@@ -166,6 +171,23 @@ class Articles extends \yii\db\ActiveRecord
     public function deleteCurrectTags()
     {
         ArticleTag::deleteAll(['article_id' => $this->id]);
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~ Set Function ~~~~~~~~~~~~~~~~~~~~~
+
+    public function setStatusActive()
+    {
+        $this->status = self::STATUS_ACTIVE;
+    }
+
+    public function setStatusNoActive()
+    {
+        $this->status = self::STATUS_NO_ACTIVE;
+    }
+
+    public function setDefaultVieved()
+    {
+        $this->viewed = self::VIEWED_DEFAULT;
     }
 
 

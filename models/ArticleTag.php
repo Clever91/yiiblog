@@ -49,19 +49,19 @@ class ArticleTag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getArticle()
-    {
-        return $this->hasOne(Articles::className(), ['id' => 'article_id']);
-    }
+    // /**
+    //  * @return \yii\db\ActiveQuery
+    //  */
+    // public function getArticle()
+    // {
+    //     return $this->hasOne(Articles::className(), ['id' => 'article_id']);
+    // }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTag()
-    {
-        return $this->hasOne(Tags::className(), ['id' => 'tag_id']);
-    }
+    // /**
+    //  * @return \yii\db\ActiveQuery
+    //  */
+    // public function getTag()
+    // {
+    //     return $this->hasOne(Tags::className(), ['id' => 'tag_id']);
+    // }
 }

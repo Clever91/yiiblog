@@ -18,11 +18,6 @@ use app\models\Tags;
  */
 class ArticlesController extends Controller
 {
-
-    const STATUS_ACTIVE = 1;
-    const STATUS_NO_ACTIVE = 0;
-    const VIEWED_DEFAULT = 0;
-
     /**
      * @inheritdoc
      */
@@ -79,11 +74,10 @@ class ArticlesController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->user_id = Yii::$app->user->identity->id;
-            $model->viewed = self::VIEWED_DEFAULT;
-            $model->status = self::STATUS_ACTIVE;
+            $model->setDefaultVieved();
+            $model->setStatusActive();
 
-            if ($model->save()) {
+            if ($model->saveArticle()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 print_r($model->getErrors()); exit();
