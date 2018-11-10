@@ -1,6 +1,12 @@
+<?php  
+
+use yii\helpers\Url;
+
+?>
+
 <article class="post">
     <div class="post-thumb">
-        <a href="blog.html"><img src="images/blog-1.jpg" alt=""></a>
+        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-1.jpg" alt=""></a>
 
         <a href="blog.html" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
@@ -36,7 +42,7 @@
 </article>
 <article class="post">
     <div class="post-thumb">
-        <a href="blog.html"><img src="images/abc.jpg" alt=""></a>
+        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/abc.jpg" alt=""></a>
 
         <a href="blog.html" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
@@ -72,7 +78,7 @@
 </article>
 <article class="post">
     <div class="post-thumb">
-        <a href="blog.html"><img src="images/blog-2.jpg" alt=""></a>
+        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-2.jpg" alt=""></a>
 
         <a href="blog.html" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
@@ -108,7 +114,7 @@
 </article>
 <article class="post">
     <div class="post-thumb">
-        <a href="blog.html"><img src="images/blog-3.jpg" alt=""></a>
+        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-3.jpg" alt=""></a>
 
         <a href="blog.html" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
@@ -145,7 +151,7 @@
 
 <article class="post">
     <div class="post-thumb">
-        <a href="blog.html"><img src="images/blog-4.jpg" alt=""></a>
+        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-4.jpg" alt=""></a>
 
         <a href="blog.html" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
