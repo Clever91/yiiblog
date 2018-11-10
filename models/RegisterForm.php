@@ -36,7 +36,7 @@ class RegisterForm extends Model
 
 	public function createUser()
 	{
-		if ($model->validate()) {
+		if ($this->validate()) {
 
 			$user = new Users();
 	        $user->attributes = $this->attributes;
