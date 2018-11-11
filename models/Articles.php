@@ -79,6 +79,20 @@ class Articles extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getPopular($limit = 3)
+    {
+        return Articles::find()->orderBy("viewed DESC")->limit($limit)->all();
+    }
+
+    public static function getLast($limit = 4)
+    {
+        return Articles::find()->orderBy("created DESC")->limit($limit)->all();
+    }
+
+    public static function getCategories()
+    {
+        return Categories::find()->all();
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~ Save Functions ~~~~~~~~~~~~~~~~~~~~~
 
@@ -125,6 +139,10 @@ class Articles extends \yii\db\ActiveRecord
 
     // ~~~~~~~~~~~~~~~~~~~~~ Get Functions ~~~~~~~~~~~~~~~~~~~~~
 
+    public function getCreated()
+    {
+        return Yii::$app->formatter->asDate($this->created, 'long');
+    }
 
     public function getSelectedTags()
     {

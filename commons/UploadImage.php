@@ -15,7 +15,7 @@ class UploadImage extends Model
 	private $old_name;
 	private $new_name;
 
-	const NO_IMAGE = 'no-image.jpg';
+	const NO_IMAGE = '/images/no-image.jpg';
 	const IMAGE_PATH = '/uploads/images/'; // Yii::getAlias('@web')
 
 	function __construct($old_name = null)
@@ -53,11 +53,14 @@ class UploadImage extends Model
 	{
 		$path = $this->getImagePath() . $this->old_name;
 
+		if (is_null($this->old_name))
+			return self::NO_IMAGE;
+
 		if ($this->isExistsImage($path)) {
 			return self::IMAGE_PATH . $this->old_name;
 		}
 
-		return self::IMAGE_PATH . self::NO_IMAGE;
+		return self::NO_IMAGE;
 	}
 
 	public function saveImage()

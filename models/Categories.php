@@ -41,4 +41,11 @@ class Categories extends \yii\db\ActiveRecord
             'title' => Yii::t('app', 'Title'),
         ];
     }
+
+    public function getArticleCount()
+    {
+        $count = Articles::find()->where('category_id = :id', array(":id" => $this->id))->count();
+
+        return $count;
+    }
 }
