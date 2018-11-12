@@ -64,8 +64,26 @@ $categories = Articles::getCategories();
                 </ul>
                 <div class="i_con">
                     <ul class="nav navbar-nav text-uppercase">
-                        <li><a href="<?= Url::toRoute('/site/login') ?>">Login</a></li>
-                        <li><a href="<?= Url::toRoute('/site/register') ?>">Register</a></li>
+
+                        <?php if (Yii::$app->user->isGuest): ?>
+
+                        <li><a href="<?= Url::toRoute('/auth/login') ?>">Login</a></li>
+                        <li><a href="<?= Url::toRoute('/auth/register') ?>">Register</a></li>
+
+                        <?php else: ?>
+
+                        <li>
+                            <?php 
+                            echo Html::beginForm(['/auth/logout'], 'post')
+                            . Html::submitButton(
+                                'Logout (' . Yii::$app->user->identity->username . ')',
+                                ['class' => 'btn btn-link logout']
+                            )
+                            . Html::endForm()
+                            ?>
+                        </li>
+
+                        <?php endif; ?>
                     </ul>
                 </div>
 

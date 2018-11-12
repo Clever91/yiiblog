@@ -7,10 +7,13 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\RegisterForm;
-use app\models\ContactForm;
+use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
+// use app\models\ContactForm;
 use app\models\Users;
+use app\models\Articles;
+use app\models\ArticleTag;
+
 
 class SiteController extends Controller
 {
@@ -64,98 +67,106 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        // $model = Users::findOne(1);
+        $query = Articles::find()->where(['status' => 1]);
+        
+        $countQuery = clone $query;
 
-        // // Yii::$app->user->login($model);
-        // Yii::$app->user->logout();
+        $pages = new Pagination([
+            'totalCount' => $countQuery->count(),
+            'pageSize' => 1
+        ]);
 
-        // if (Yii::$app->user->isGuest) {
-        //     echo "guest";
-        // } else {
-        //     echo "sign in";
-        // }
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
-        // echo sha1("demo"); exit();
-
-        return $this->render('index');
-    }
-
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
+        return $this->render('index', [
+             'models' => $models,
+             'pages' => $pages,
         ]);
     }
 
-    public function actionRegister()
+    // /**
+    //  * Displays contact page.
+    //  *
+    //  * @return Response|string
+    //  */
+    // public function actionContact()
+    // {
+    //     $model = new ContactForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+    //         Yii::$app->session->setFlash('contactFormSubmitted');
+
+    //         return $this->refresh();
+    //     }
+    //     return $this->render('contact', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    // /**
+    //  * Displays about page.
+    //  *
+    //  * @return string
+    //  */
+    // public function actionAbout()
+    // {
+    //     return $this->render('about');
+    // }
+
+    public function actionView($id)
     {
-        $model = new RegisterForm();
+        $model = Articles::findOne($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-
-            if ($model->createUser()) {
-                
-                return $this->redirect(['login']);
-            }
-        }
-
-        return $this->render('register', array(
+        return $this->render('view', [
             'model' => $model
-        ));
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
+    public function actionCategoryList($cat_id)
     {
-        return $this->render('about');
+        $query = Articles::find()->where('category_id = :cat_id AND status = 1', ['cat_id' => $cat_id]);
+
+        $countQuery = clone $query;
+
+        $pages = new Pagination([
+            'totalCount' => $countQuery->count(),
+            'pageSize' => 1
+        ]);
+
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('list', [
+             'models' => $models,
+             'pages' => $pages,
+        ]);
+    }
+
+    public function actionTagList($tag_id)
+    {
+
+        $articles = ArticleTag::find()->where('tag_id = :id', [':id' => $tag_id])->select('article_id')->asArray()->all();
+
+        $ids = ArrayHelper::getColumn($articles, 'article_id');
+
+        $query = Articles::find()->where(['id' => $ids, 'status' => 1]);
+
+        $countQuery = clone $query;
+
+        $pages = new Pagination([
+            'totalCount' => $countQuery->count(),
+            'pageSize' => 1
+        ]);
+
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('list', [
+             'models' => $models,
+             'pages' => $pages,
+        ]);
     }
 }

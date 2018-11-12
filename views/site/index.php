@@ -1,194 +1,60 @@
 <?php  
 
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 ?>
 
+<?php foreach ($models as $model): ?>
+
 <article class="post">
     <div class="post-thumb">
-        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-1.jpg" alt=""></a>
+        <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>">
+            <img src="<?= Url::base(true) . $model->getImage() ?>" alt="">
+        </a>
 
-        <a href="blog.html" class="post-thumb-overlay text-center">
+        <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
         </a>
     </div>
     <div class="post-content">
         <header class="entry-header text-center text-uppercase">
-            <h6><a href="#"> Travel</a></h6>
+            <h6>
+                <a href="#category"><?= $model->category->title ?></a>
+            </h6>
 
-            <h1 class="entry-title"><a href="blog.html">Home is peaceful place</a></h1>
-
-
-        </header>
-        <div class="entry-content">
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tevidulabore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-                ipsum dolor sit am Lorem ipsum dolor sitconsetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore maliquyam erat, sed diam voluptua.
-            </p>
-
-            <div class="btn-continue-reading text-center text-uppercase">
-                <a href="blog.html" class="more-link">Continue Reading</a>
-            </div>
-        </div>
-        <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> On February 12, 2016</span>
-            <ul class="text-center pull-right">
-                <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li>325
-            </ul>
-        </div>
-    </div>
-</article>
-<article class="post">
-    <div class="post-thumb">
-        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/abc.jpg" alt=""></a>
-
-        <a href="blog.html" class="post-thumb-overlay text-center">
-            <div class="text-uppercase text-center">View Post</div>
-        </a>
-    </div>
-    <div class="post-content">
-        <header class="entry-header text-center text-uppercase">
-            <h6><a href="#">craft</a></h6>
-
-            <h1 class="entry-title"><a href="blog.html">wooden table is beautiful</a></h1>
-
+            <h1 class="entry-title">
+                <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>"><?= $model->title ?></a>
+            </h1>
 
         </header>
         <div class="entry-content">
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tevidulabore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-                ipsum dolor sit am Lorem ipsum dolor sitconsetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore maliquyam erat, sed diam voluptua.
-            </p>
+            <p><?= $model->description ?></p>
 
             <div class="btn-continue-reading text-center text-uppercase">
-                <a href="blog.html" class="more-link">Continue Reading</a>
+                <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>" class="more-link">Continue Reading</a>
             </div>
         </div>
         <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> On February 12, 2016</span>
+            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> <?= $model->getCreated() ?></span>
             <ul class="text-center pull-right">
-                <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li>325
-            </ul>
-        </div>
-    </div>
-</article>
-<article class="post">
-    <div class="post-thumb">
-        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-2.jpg" alt=""></a>
-
-        <a href="blog.html" class="post-thumb-overlay text-center">
-            <div class="text-uppercase text-center">View Post</div>
-        </a>
-    </div>
-    <div class="post-content">
-        <header class="entry-header text-center text-uppercase">
-            <h6><a href="#"> Lifestyle</a></h6>
-
-            <h1 class="entry-title"><a href="blog.html">Small work station</a></h1>
-
-
-        </header>
-        <div class="entry-content">
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tevidulabore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-                ipsum dolor sit am Lorem ipsum dolor sitconsetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore maliquyam erat, sed diam voluptua.
-            </p>
-
-            <div class="btn-continue-reading text-center text-uppercase">
-                <a href="blog.html" class="more-link">Continue Reading</a>
-            </div>
-        </div>
-        <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> On February 12, 2016</span>
-            <ul class="text-center pull-right">
-                <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li>325
-            </ul>
-        </div>
-    </div>
-</article>
-<article class="post">
-    <div class="post-thumb">
-        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-3.jpg" alt=""></a>
-
-        <a href="blog.html" class="post-thumb-overlay text-center">
-            <div class="text-uppercase text-center">View Post</div>
-        </a>
-    </div>
-    <div class="post-content">
-        <header class="entry-header text-center text-uppercase">
-            <h6><a href="#"> Mission</a></h6>
-
-            <h1 class="entry-title"><a href="blog.html">Waiting to launch on the sky</a></h1>
-
-
-        </header>
-        <div class="entry-content">
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tevidulabore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-                ipsum dolor sit am Lorem ipsum dolor sitconsetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore maliquyam erat, sed diam voluptua.
-            </p>
-
-            <div class="btn-continue-reading text-center text-uppercase">
-                <a href="blog.html" class="more-link">Continue Reading</a>
-            </div>
-        </div>
-        <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> On February 12, 2016</span>
-            <ul class="text-center pull-right">
-                <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li>325
+                <li>
+                    <a class="s-facebook" href="#">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </li>
+                <?= $model->viewed ?>
             </ul>
         </div>
     </div>
 </article>
 
-<article class="post">
-    <div class="post-thumb">
-        <a href="blog.html"><img src="<?= Url::base(true) ?>/images/blog-4.jpg" alt=""></a>
+<?php endforeach; ?>
 
-        <a href="blog.html" class="post-thumb-overlay text-center">
-            <div class="text-uppercase text-center">View Post</div>
-        </a>
-    </div>
-    <div class="post-content">
-        <header class="entry-header text-center text-uppercase">
-            <h6><a href="#"> Cloth</a></h6>
+<?php  
 
-            <h1 class="entry-title"><a href="blog.html">A day labour wore jeans</a></h1>
+echo LinkPager::widget([
+    'pagination' => $pages,
+]);
 
-
-        </header>
-        <div class="entry-content">
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                tevidulabore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-                ipsum dolor sit am Lorem ipsum dolor sitconsetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore maliquyam erat, sed diam voluptua.
-            </p>
-
-            <div class="btn-continue-reading text-center text-uppercase">
-                <a href="blog.html" class="more-link">Continue Reading</a>
-            </div>
-        </div>
-        <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> On February 12, 2016</span>
-            <ul class="text-center pull-right">
-                <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li>325
-            </ul>
-        </div>
-    </div>
-</article>
-<ul class="pagination">
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-</ul>
+?>
