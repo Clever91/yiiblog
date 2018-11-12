@@ -1,19 +1,22 @@
-<?php  
-
-use yii\helpers\Url;
-
-?>
-
 <article class="post">
     <div class="post-thumb">
-        <a href="#"><img src="<?= Url::base(true) . $model->getImage() ?>" alt=""></a>
+        <a href="#">
+            <img src="<?= $model->getImage() ?>" alt="">
+        </a>
     </div>
     <div class="post-content">
         <header class="entry-header text-center text-uppercase">
-            <h6><a href="<?= Url::toRoute(['site/category-list', 'cat_id' => $model->category->id]) ?>"> <?= $model->category->title ?></a></h6>
+            <h6>
+                <a href="<?= $model->category->getViewLink() ?>"> 
+                    <?= $model->category->title ?>
+                </a>
+            </h6>
 
-            <h1 class="entry-title"><a href="blog.html"><?= $model->title ?></a></h1>
-
+            <h1 class="entry-title">
+                <a href="<?= $model->getViewLink() ?>"
+                    ><?= $model->title ?>
+                </a>
+            </h1>
 
         </header>
         <div class="entry-content">
@@ -23,7 +26,7 @@ use yii\helpers\Url;
         	
         	<?php foreach ($model->tags as $tag): ?>
             
-            <a href="<?= Url::toRoute(['site/tag-list', 'tag_id' => $tag->id]) ?>" class="btn btn-default">
+            <a href="<?= $tag->getViewLink() ?>" class="btn btn-default">
             	<?= $tag->title ?>
             </a>
 

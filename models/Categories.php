@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "categories".
@@ -47,5 +48,10 @@ class Categories extends \yii\db\ActiveRecord
         $count = Articles::find()->where('category_id = :id', array(":id" => $this->id))->count();
 
         return $count;
+    }
+
+    public function getViewLink()
+    {
+        return Url::toRoute(['/site/category-list', 'cat_id' => $this->id]);
     }
 }

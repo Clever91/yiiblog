@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "tags".
@@ -50,5 +51,10 @@ class Tags extends \yii\db\ActiveRecord
     public function getArticleTags()
     {
         return $this->hasMany(ArticleTag::className(), ['tag_id' => 'id']);
+    }
+
+    public function getViewLink()
+    {
+        return Url::toRoute(['/site/tag-list', 'tag_id' => $this->id]);
     }
 }

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\commons\UploadImage;
+use yii\helpers\Url;
 use app\models\Categories;
 use app\models\Tags;
 use yii\helpers\ArrayHelper;
@@ -228,6 +229,11 @@ class Articles extends \yii\db\ActiveRecord
     public function getTags()
     {
         return $this->hasMany(Tags::className(), ['id' => 'tag_id'])->viaTable('article_tag', ['article_id' => 'id']);
+    }
+
+    public function getViewLink()
+    {
+        return Url::toRoute(['/site/view', 'id' => $this->id]);
     }
 
 

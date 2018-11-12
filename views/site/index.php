@@ -1,30 +1,25 @@
-<?php  
-
-use yii\helpers\Url;
-use yii\widgets\LinkPager;
-
-?>
+<?php  use yii\widgets\LinkPager; ?>
 
 <?php foreach ($models as $model): ?>
 
 <article class="post">
     <div class="post-thumb">
-        <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>">
-            <img src="<?= Url::base(true) . $model->getImage() ?>" alt="">
+        <a href="<?= $model->getViewLink() ?>">
+            <img src="<?= $model->getImage() ?>" alt="">
         </a>
 
-        <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>" class="post-thumb-overlay text-center">
+        <a href="<?= $model->getViewLink() ?>" class="post-thumb-overlay text-center">
             <div class="text-uppercase text-center">View Post</div>
         </a>
     </div>
     <div class="post-content">
         <header class="entry-header text-center text-uppercase">
             <h6>
-                <a href="#category"><?= $model->category->title ?></a>
+                <a href="<?= $model->category->getViewLink() ?>"><?= $model->category->title ?></a>
             </h6>
 
             <h1 class="entry-title">
-                <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>"><?= $model->title ?></a>
+                <a href="<?= $model->getViewLink() ?>"><?= $model->title ?></a>
             </h1>
 
         </header>
@@ -32,7 +27,7 @@ use yii\widgets\LinkPager;
             <p><?= $model->description ?></p>
 
             <div class="btn-continue-reading text-center text-uppercase">
-                <a href="<?= Url::toRoute(['/site/view', 'id' => $model->id]) ?>" class="more-link">Continue Reading</a>
+                <a href="<?= $model->getViewLink() ?>" class="more-link">Continue Reading</a>
             </div>
         </div>
         <div class="social-share">

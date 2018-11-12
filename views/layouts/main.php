@@ -112,14 +112,13 @@ $categories = Articles::getCategories();
 
                         <div class="popular-post">
 
-                            <a href="#" class="popular-img">
-                                <img src="<?= Url::base(true) . $popular->getImage() ?>" alt="">
-
+                            <a href="<?= $popular->getViewLink() ?>" class="popular-img">
+                                <img src="<?= $popular->getImage() ?>" alt="">
                                 <div class="p-overlay"></div>
                             </a>
 
                             <div class="p-content">
-                                <a href="#" class="text-uppercase"><?= $popular->title ?></a>
+                                <a href="<?= $popular->getViewLink() ?>" class="text-uppercase"><?= $popular->title ?></a>
                                 <span class="p-date"><?= $popular->getCreated() ?></span>
 
                             </div>
@@ -137,13 +136,13 @@ $categories = Articles::getCategories();
 
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#" class="popular-img">
-                                        <img src="<?= Url::base(true) . $last->getImage() ?>" alt="">
+                                    <a href="<?= $last->getViewLink() ?>" class="popular-img">
+                                        <img src="<?= $last->getImage() ?>" alt="">
                                         <div class="p-overlay"></div>
                                     </a>
                                 </div>
                                 <div class="p-content">
-                                    <a href="#" class="text-uppercase"><?= $last->title ?></a>
+                                    <a href="<?= $last->getViewLink() ?>" class="text-uppercase"><?= $last->title ?></a>
                                     <span class="p-date"><?= $last->getCreated() ?></span>
                                 </div>
                             </div>
@@ -159,7 +158,7 @@ $categories = Articles::getCategories();
                             <?php foreach ($categories as $category): ?>
 
                             <li>
-                                <a href="#"><?= $category->title ?></a>
+                                <a href="<?= $category->getViewLink() ?>"><?= $category->title ?></a>
                                 <span class="post-count pull-right"> (<?= $category->getArticleCount() ?>)</span>
                             </li>
 

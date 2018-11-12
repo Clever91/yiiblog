@@ -1,20 +1,16 @@
-<?php  
+<?php use yii\widgets\LinkPager; ?>
 
-use yii\helpers\Url;
-use yii\widgets\LinkPager;
-
-?>
 <?php foreach ($models as $model): ?>
 
 <article class="post post-list">
     <div class="row">
         <div class="col-md-6">
             <div class="post-thumb">
-                <a href="#">
-                    <img src="<?= Url::base(true) . $model->getImage() ?>" alt="" class="pull-left">
+                <a href="<?= $model->getViewLink() ?>">
+                    <img src="<?= $model->getImage() ?>" alt="" class="pull-left">
                 </a>
 
-                <a href="#" class="post-thumb-overlay text-center">
+                <a href="<?= $model->getViewLink() ?>" class="post-thumb-overlay text-center">
                     <div class="text-uppercase text-center">View Post</div>
                 </a>
             </div>
@@ -22,10 +18,14 @@ use yii\widgets\LinkPager;
         <div class="col-md-6">
             <div class="post-content">
                 <header class="entry-header text-uppercase">
-                    <h6><a href="#"> <?= $model->category->title ?></a></h6>
+                    <h6>
+                        <a href="<?= $model->category->getViewLink() ?>">
+                            <?= $model->category->title ?>
+                        </a>
+                    </h6>
 
                     <h1 class="entry-title">
-                        <a href="#"><?= $model->title ?></a>
+                        <a href="<?= $model->getViewLink() ?>"><?= $model->title ?></a>
                     </h1>
                 </header>
                 <div class="entry-content">

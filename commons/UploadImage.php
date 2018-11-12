@@ -5,6 +5,7 @@ namespace app\commons;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
+use yii\helpers\Url;
 
 /**
 * @author Clever
@@ -54,13 +55,13 @@ class UploadImage extends Model
 		$path = $this->getImagePath() . $this->old_name;
 
 		if (is_null($this->old_name))
-			return self::NO_IMAGE;
+			return Url::base(true) . self::NO_IMAGE;
 
 		if ($this->isExistsImage($path)) {
-			return self::IMAGE_PATH . $this->old_name;
+			return Url::base(true) . self::IMAGE_PATH . $this->old_name;
 		}
 
-		return self::NO_IMAGE;
+		return Url::base(true) . self::NO_IMAGE;
 	}
 
 	public function saveImage()
