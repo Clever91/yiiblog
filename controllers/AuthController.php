@@ -14,6 +14,8 @@ use app\models\Users;
 class AuthController extends Controller
 {
 	
+    public $layout = '/main-without-sidebar';
+
 	/**
      * Login action.
      *

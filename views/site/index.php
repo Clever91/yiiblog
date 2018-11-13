@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="social-share">
-            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> <?= $model->getCreated() ?></span>
+            <span class="social-share-title pull-left text-capitalize">By <a href="#"><?= $model->user->name ?></a> <?= $model->getCreated() ?></span>
             <ul class="text-center pull-right">
                 <li>
                     <a class="s-facebook" href="#">

@@ -36,7 +36,7 @@
 
         <div class="social-share">
 			<span
-                    class="social-share-title pull-left text-capitalize">By Rubel On <?= $model->getCreated(); ?></span>
+                    class="social-share-title pull-left text-capitalize">By <?= $model->user->name ?> On <?= $model->getCreated(); ?></span>
             <ul class="text-center pull-right">
                 <li><a class="s-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a class="s-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
