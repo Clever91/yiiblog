@@ -7,6 +7,7 @@ use \yii\web\IdentityInterface;
 
 class Users extends ActiveRecord implements IdentityInterface
 {
+
     /**
      * @inheritdoc
      */
@@ -129,5 +130,14 @@ class Users extends ActiveRecord implements IdentityInterface
     public function isAdmin()
     {
         return $this->is_admin;
+    }
+
+    public function loginVk($uid, $first_name, $last_name, $photo)
+    {
+        $this->uid = $uid;
+        $this->username = $first_name . "-" . $uid;
+        $this->name = $first_name . " " .$last_name;
+        $this->photo = $photo;
+        return $this->save(false);
     }
 }

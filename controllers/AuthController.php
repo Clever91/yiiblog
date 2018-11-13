@@ -6,6 +6,7 @@ use Yii;
 use yii\web\controller;
 use app\models\LoginForm;
 use app\models\RegisterForm;
+use app\models\Users;
 
 /**
  * @author Sherzod Usmonov
@@ -64,9 +65,32 @@ class AuthController extends Controller
         return $this->goHome();
     }
 
-    public function actionTest()
+    public function actionLoginVk($uid, $first_name, $last_name, $photo)
     {
-    	echo "Test"; die;
+        if (Yii::$app->request->get()) 
+        {
+            $model = Users::find()->where(['uid' => $uid])->one();
+
+            if ($model) 
+            {
+                Yii::$app->user->login($model);
+
+                return $this->redirect(['/site/index']);
+            }
+            else 
+            {
+                $model = new Users();
+
+                if ($model->loginVk($uid, $first_name, $last_name, $photo)) 
+                {
+                    Yii::$app->user->login($model);
+                    
+                    return $this->redirect(['/site/index']);
+                }
+            }
+        }
+
+        return $this->redirect(['/site/error']);
     }
 }
 
