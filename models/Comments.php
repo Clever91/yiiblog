@@ -18,6 +18,10 @@ use Yii;
  */
 class Comments extends \yii\db\ActiveRecord
 {
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_NO_ACTIVE = 0;
+
     /**
      * @inheritdoc
      */
@@ -63,4 +67,14 @@ class Comments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
+
+    public function afterSave()
+    {
+        if ($this->isNewRecord)
+        {
+            $this->status = self::STATUS_ACTIVE;
+            $this->created = date("Y-m-d H:m:i");
+        }
+    }
+
 }

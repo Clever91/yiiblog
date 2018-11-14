@@ -1,9 +1,16 @@
-<?php use yii\helpers\Url; ?>
+<?php 
+
+use yii\helpers\Url; 
+// use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+
+?>
 
 <article class="post">
     <div class="post-thumb">
-        <a href="#">
-            <img src="<?= $model->getImage() ?>" alt="">
+        <a href="<?= $model->getViewLink(); ?>">
+            <img src="<?= $model->getImage(); ?>" alt="">
         </a>
     </div>
     <div class="post-content">
@@ -62,7 +69,7 @@
     <div class="col-md-6">
         <div class="single-blog-box">
             <a href="<?= $preview->getViewLink(); ?>">
-                <img src="<?= $preview->getImage(); ?>" alt="">
+                <img src="<?= $preview->getImage(); ?>" alt="" style="width: 250px">
 
                 <div class="overlay">
                     <div class="promo-text">
@@ -78,7 +85,7 @@
     <div class="col-md-6">
         <div class="single-blog-box">
             <a href="<?= $next->getViewLink(); ?>">
-                <img src="<?= $next->getImage(); ?>" alt="">
+                <img src="<?= $next->getImage(); ?>" alt="" style="width: 250px">
 
                 <div class="overlay">
                     <div class="promo-text">
@@ -102,9 +109,9 @@
 
         <div class="single-item">
             <a href="<?= $like->getViewLink() ?>">
-                <img src="<?= $like->getImage() ?>" alt="">
+                <img src="<?= $like->getImage() ?>" alt="" style="width: 210px">
 
-                <p><?= $link->title ?></p>
+                <p><?= $like->title ?></p>
             </a>
         </div>
 
@@ -116,7 +123,9 @@
 <div class="bottom-comment"><!--bottom comment-->
     <h4>3 comments</h4>
 
-    <div class="comment-img">
+    
+
+    <!-- <div class="comment-img">
         <img class="img-circle" src="<?= Url::base(true) ?>/images/comment-img.jpg" alt="">
     </div>
 
@@ -133,39 +142,36 @@
             diam nonumy
             eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
             voluptua. At vero eos et cusam et justo duo dolores et ea rebum.</p>
-    </div>
+    </div> -->
 </div>
 <!-- end bottom comment-->
 
+<?php if (!Yii::$app->user->isGuest): ?>
 
 <div class="leave-comment"><!--leave comment-->
 
     <h4>Leave a reply</h4>
 
-
-    <form class="form-horizontal contact-form" role="form" method="post" action="#">
-        <div class="form-group">
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-            </div>
-            <div class="col-md-6">
-                <input type="email" class="form-control" id="email" name="email"
-                       placeholder="Email">
-            </div>
-        </div>
+        <?php $form = ActiveForm::begin([
+            'id' => 'comment-form', 
+            'class' => 'form-horizontal comment-form', 
+            'method' => 'post',
+            'action' => Url::toRoute('/site/comment')
+        ]) ?>
 
         <div class="form-group">
             <div class="col-md-12">
-                <input type="text" class="form-control" id="subject" name="subject"
-                       placeholder="Website url">
+                <?= $form->field($comment, 'text')->textArea(['rows' => 4, 'placeholder' => "write comment is here..."])->label(false) ?>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-						<textarea class="form-control" rows="6" name="message"
-                                  placeholder="Write Massage"></textarea>
-            </div>
-        </div>
-        <a href="#" class="btn send-btn">Post Comment</a>
+
+        <?= Html::activeHiddenInput($comment, 'user_id'); ?>
+        <?= Html::activeHiddenInput($comment, 'article_id'); ?>
+
+        <?= Html::submitButton('Post Comment', ['class' => "btn send-btn", 'name' => "submit"]) ?>
+
+        <?php ActiveForm::end(); ?>
     </form>
 </div><!--end leave comment-->
+
+<?php endif; ?>

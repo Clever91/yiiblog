@@ -9,10 +9,11 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
-// use app\models\ContactForm;
+
 use app\models\Users;
 use app\models\Articles;
 use app\models\ArticleTag;
+use app\models\Comments;
 
 
 class SiteController extends Controller
@@ -89,6 +90,10 @@ class SiteController extends Controller
     public function actionView($id)
     {
         $model = Articles::findOne($id);
+
+        if (is_null($model))
+            return $this->goHome();
+
         $preview = Articles::findOne($id - 1);
         $next = Articles::findOne($id + 1);
 
@@ -101,12 +106,34 @@ class SiteController extends Controller
         $sql = 'status = 1 AND category_id = :cat_id AND id <> :id';
         $likes = Articles::find()->where($sql, [':cat_id' => $model->category_id, ':id' => $model->id])->orderBy('viewed DESC')->limit(6)->all();
 
+        $comment = new Comments();
+        $comment->article_id = $model->id;
+        
+        if (!Yii::$app->user->isGuest)
+            $comment->user_id = Yii::$app->user->identity->id;
+
         return $this->render('view', [
             'model' => $model,
             'likes' => $likes,
             'next' => $next,
-            'preview' => $preview
+            'preview' => $preview,
+            'comment' => $comment
         ]);
+    }
+
+    public function actionComment()
+    {
+        $comment = new Comments();
+        
+        if ($comment->load(Yii::$app->request->post()) && $comment->save())
+        {
+            Yii::$app->session->setFlash('success', "Your coment is saved successfully");
+
+            return $this->redirect(['/site/view', 'id' => $comment->article_id]);
+        }
+
+        return $this->goBack();
+
     }
 
     public function actionCategoryList($cat_id)
@@ -155,4 +182,5 @@ class SiteController extends Controller
              'pages' => $pages,
         ]);
     }
+
 }

@@ -29,10 +29,13 @@ class AuthController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+            if (Yii::$app->user->identity->isAdmin())
+                return $this->redirect(['/admin/default/index']);
+            else
+                return $this->goBack();
         }
 
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
         ]);
