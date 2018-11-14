@@ -1,3 +1,5 @@
+<?php use yii\helpers\Url; ?>
+
 <article class="post">
     <div class="post-thumb">
         <a href="#">
@@ -35,8 +37,7 @@
         </div>
 
         <div class="social-share">
-			<span
-                    class="social-share-title pull-left text-capitalize">By <?= $model->user->name ?> On <?= $model->getCreated(); ?></span>
+			<span class="social-share-title pull-left text-capitalize">By <?= $model->user->name ?> On <?= $model->getCreated(); ?></span>
             <ul class="text-center pull-right">
                 <li><a class="s-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a class="s-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -47,110 +48,76 @@
         </div>
     </div>
 </article>
+
 <div class="top-comment"><!--top comment-->
-    <img src="assets/images/comment.jpg" class="pull-left img-circle" alt="">
+    <img src="<?= Url::base(true) ?>/images/comment.jpg" class="pull-left img-circle" alt="">
     <h4>Rubel Miah</h4>
 
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro mod tempor
         invidunt ut labore et dolore magna aliquyam erat.</p>
 </div><!--top comment end-->
+
 <div class="row"><!--blog next previous-->
+    <?php if (!is_null($preview)): ?>
     <div class="col-md-6">
         <div class="single-blog-box">
-            <a href="#">
-                <img src="assets/images/blog-next.jpg" alt="">
+            <a href="<?= $preview->getViewLink(); ?>">
+                <img src="<?= $preview->getImage(); ?>" alt="">
 
                 <div class="overlay">
-
                     <div class="promo-text">
-                        <p><i class=" pull-left fa fa-angle-left"></i></p>
-                        <h5>Rubel is doing Cherry theme</h5>
+                        <p><i class="pull-right fa fa-angle-left"></i></p>
+                        <h5><?= $preview->title ?></h5>
                     </div>
                 </div>
-
-
             </a>
         </div>
     </div>
+    <?php endif; ?>
+    <?php if (!is_null($next)): ?>
     <div class="col-md-6">
         <div class="single-blog-box">
-            <a href="#">
-                <img src="assets/images/blog-next.jpg" alt="">
+            <a href="<?= $next->getViewLink(); ?>">
+                <img src="<?= $next->getImage(); ?>" alt="">
 
                 <div class="overlay">
                     <div class="promo-text">
                         <p><i class=" pull-right fa fa-angle-right"></i></p>
-                        <h5>Rubel is doing Cherry theme</h5>
-
+                        <h5><?= $next->title ?></h5>
                     </div>
                 </div>
             </a>
         </div>
     </div>
+    <?php endif; ?>
 </div><!--blog next previous end-->
+
 <div class="related-post-carousel"><!--related post carousel-->
     <div class="related-heading">
         <h4>You might also like</h4>
     </div>
     <div class="items">
-        <div class="single-item">
-            <a href="#">
-                <img src="assets/images/related-post-1.jpg" alt="">
 
-                <p>Just Wondering at Beach</p>
+        <?php foreach ($likes as $like): ?>
+
+        <div class="single-item">
+            <a href="<?= $like->getViewLink() ?>">
+                <img src="<?= $like->getImage() ?>" alt="">
+
+                <p><?= $link->title ?></p>
             </a>
         </div>
 
+        <?php endforeach; ?>
 
-        <div class="single-item">
-            <a href="#">
-                <img src="assets/images/related-post-2.jpg" alt="">
-
-                <p>Just Wondering at Beach</p>
-            </a>
-        </div>
-
-
-        <div class="single-item">
-            <a href="#">
-                <img src="assets/images/related-post-3.jpg" alt="">
-
-                <p>Just Wondering at Beach</p>
-            </a>
-        </div>
-
-
-        <div class="single-item">
-            <a href="#">
-                <img src="assets/images/related-post-1.jpg" alt="">
-
-                <p>Just Wondering at Beach</p>
-            </a>
-        </div>
-
-        <div class="single-item">
-            <a href="#">
-                <img src="assets/images/related-post-2.jpg" alt="">
-
-                <p>Just Wondering at Beach</p>
-            </a>
-        </div>
-
-
-        <div class="single-item">
-            <a href="#">
-                <img src="assets/images/related-post-3.jpg" alt="">
-
-                <p>Just Wondering at Beach</p>
-            </a>
-        </div>
     </div>
 </div><!--related post carousel-->
+
 <div class="bottom-comment"><!--bottom comment-->
     <h4>3 comments</h4>
 
     <div class="comment-img">
-        <img class="img-circle" src="assets/images/comment-img.jpg" alt="">
+        <img class="img-circle" src="<?= Url::base(true) ?>/images/comment-img.jpg" alt="">
     </div>
 
     <div class="comment-text">

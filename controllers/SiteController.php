@@ -67,14 +67,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        $query = Articles::find()->where(['status' => 1]);
+        $query = Articles::find()->where(['status' => 1])->orderBy('created DESC');
         
         $countQuery = clone $query;
 
         $pages = new Pagination([
             'totalCount' => $countQuery->count(),
-            'pageSize' => 1
+            'pageSize' => 3
         ]);
 
         $models = $query->offset($pages->offset)
@@ -90,9 +89,23 @@ class SiteController extends Controller
     public function actionView($id)
     {
         $model = Articles::findOne($id);
+        $preview = Articles::findOne($id - 1);
+        $next = Articles::findOne($id + 1);
+
+        if (is_null($next))
+            $next = Articles::findOne($id - 2);
+
+        if (is_null($preview))
+            $preview = Articles::findOne($id + 2);
+
+        $sql = 'status = 1 AND category_id = :cat_id AND id <> :id';
+        $likes = Articles::find()->where($sql, [':cat_id' => $model->category_id, ':id' => $model->id])->orderBy('viewed DESC')->limit(6)->all();
 
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'likes' => $likes,
+            'next' => $next,
+            'preview' => $preview
         ]);
     }
 
