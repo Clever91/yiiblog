@@ -99,6 +99,8 @@ use yii\helpers\Html;
     <?php endif; ?>
 </div><!--blog next previous end-->
 
+<?php if (!is_null($likes) && !empty($likes)): ?>
+
 <div class="related-post-carousel"><!--related post carousel-->
     <div class="related-heading">
         <h4>You might also like</h4>
@@ -120,31 +122,38 @@ use yii\helpers\Html;
     </div>
 </div><!--related post carousel-->
 
+<?php endif; ?>
+
+<?php if (count($comments)): ?>
+
 <div class="bottom-comment"><!--bottom comment-->
-    <h4>3 comments</h4>
+    <h4><?= count($comments) ?> comments</h4>
 
-    
+    <?php foreach ($comments as $reply): ?>
 
-    <!-- <div class="comment-img">
-        <img class="img-circle" src="<?= Url::base(true) ?>/images/comment-img.jpg" alt="">
+    <div class="col-md-12">
+        <div class="comment-img">
+            <img class="img-circle" src="<?= Url::base(true) ?>/images/comment-img.jpg" alt="" style="width: 50px">
+        </div>
+
+        <div class="comment-text">
+            <a href="#" class="replay btn pull-right"> Replay</a>
+            <h5><?= $reply->user->name ?></h5>
+
+            <p class="comment-date">
+                <?= $reply->getCreated(); ?>
+            </p>
+
+            <p class="para"><?= $reply->text; ?></p>
+        </div>
     </div>
 
-    <div class="comment-text">
-        <a href="#" class="replay btn pull-right"> Replay</a>
-        <h5>Rubel Miah</h5>
+    <?php endforeach; ?>
 
-        <p class="comment-date">
-            December, 02, 2015 at 5:57 PM
-        </p>
-
-
-        <p class="para">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-            diam nonumy
-            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-            voluptua. At vero eos et cusam et justo duo dolores et ea rebum.</p>
-    </div> -->
 </div>
 <!-- end bottom comment-->
+
+<?php endif; ?>
 
 <?php if (!Yii::$app->user->isGuest): ?>
 

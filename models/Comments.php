@@ -77,4 +77,9 @@ class Comments extends \yii\db\ActiveRecord
         }
     }
 
+    public function getCreated()
+    {
+        return Yii::$app->formatter->asDatetime($this->created, 'long');
+    }
+
 }

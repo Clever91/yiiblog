@@ -10,6 +10,7 @@ use yii\base\Model;
 */
 class RegisterForm extends Model
 {
+	public $name;
 	public $username;
 	public $email;
 	public $password;
@@ -18,7 +19,8 @@ class RegisterForm extends Model
 	public function rules()
 	{
 		return [
-			[['username', 'email', 'password'], 'required'],
+			[['name', 'username', 'email', 'password'], 'required'],
+			['name', 'string', 'min' => 3],
 			['username', 'string', 'min' => 3],
 			['email', 'email'],
 			['verifyCode', 'captcha'],

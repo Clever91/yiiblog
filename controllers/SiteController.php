@@ -96,6 +96,7 @@ class SiteController extends Controller
 
         $preview = Articles::findOne($id - 1);
         $next = Articles::findOne($id + 1);
+        $comments = Comments::find()->where(['article_id' => $model->id])->orderBy('created DESC')->all();
 
         if (is_null($next))
             $next = Articles::findOne($id - 2);
@@ -110,21 +111,23 @@ class SiteController extends Controller
         $comment->article_id = $model->id;
         
         if (!Yii::$app->user->isGuest)
-            $comment->user_id = Yii::$app->user->identity->id;
+            $comment->user_id = Yii::$app->user->getId();
+
 
         return $this->render('view', [
             'model' => $model,
             'likes' => $likes,
             'next' => $next,
             'preview' => $preview,
-            'comment' => $comment
+            'comment' => $comment,
+            'comments' => $comments
         ]);
     }
 
     public function actionComment()
     {
         $comment = new Comments();
-        
+
         if ($comment->load(Yii::$app->request->post()) && $comment->save())
         {
             Yii::$app->session->setFlash('success', "Your coment is saved successfully");
