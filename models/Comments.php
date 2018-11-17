@@ -68,6 +68,14 @@ class Comments extends \yii\db\ActiveRecord
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArticle()
+    {
+        return $this->hasOne(Articles::className(), ['id' => 'article_id']);
+    }
+
     public function afterSave()
     {
         if ($this->isNewRecord)
@@ -80,6 +88,20 @@ class Comments extends \yii\db\ActiveRecord
     public function getCreated()
     {
         return Yii::$app->formatter->asDatetime($this->created, 'long');
+    }
+
+
+    public function getStatusName()
+    {
+        return self::getStatus()[$this->status];
+    }
+
+    public static function getStatus()
+    {
+        return [
+            self::STATUS_ACTIVE => "Active",
+            self::STATUS_NO_ACTIVE => "No Active",
+        ];
     }
 
 }
