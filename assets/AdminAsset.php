@@ -25,6 +25,8 @@ class AdminAsset extends AssetBundle
     ];
 
     public $js = [
+        'ckeditor/ckeditor.js',
+        'ckfinder/ckfinder.js'
     ];
     
     public $depends = [

@@ -30,13 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             [
-                'label' => 'user_id',
+                'label' => 'User',
+                'attribute' => 'user_id',
                 'value' => function($data) {
                     return $data->user->username;
                 }
             ],
             [
-                'label' => 'category_id',
+                'label' => 'Category',
+                'attribute' => 'user_id',
                 'value' => function($data) {
                     return ($data->category) ? $data->category->title : null;
                 }
