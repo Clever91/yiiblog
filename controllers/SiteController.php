@@ -94,6 +94,8 @@ class SiteController extends Controller
         if (is_null($model))
             return $this->goHome();
 
+        $model->viewedCounter();
+
         $preview = Articles::findOne($id - 1);
         $next = Articles::findOne($id + 1);
         $comments = Comments::find()->where(['article_id' => $model->id])->orderBy('created DESC')->all();

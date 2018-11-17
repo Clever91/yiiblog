@@ -137,6 +137,11 @@ class Articles extends \yii\db\ActiveRecord
         }
     }
 
+    public function viewedCounter()
+    {
+        $this->viewed += 1;
+        $this->save(false);
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~ Get Functions ~~~~~~~~~~~~~~~~~~~~~
 
@@ -182,6 +187,11 @@ class Articles extends \yii\db\ActiveRecord
             self::STATUS_ACTIVE => 'Active',
             self::STATUS_NO_ACTIVE => 'No Active'
         ];
+    }
+
+    public function getAuthor()
+    {
+        return $this->user->name;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~ Delete Function ~~~~~~~~~~~~~~~~~~~~~
