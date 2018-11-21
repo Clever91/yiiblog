@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "categories".
@@ -54,4 +55,10 @@ class Categories extends \yii\db\ActiveRecord
     {
         return Url::toRoute(['/site/category-list', 'cat_id' => $this->id]);
     }
+
+    public static function getAll()
+    {
+        return ArrayHelper::map(self::find()->all(), 'id', 'title');
+    }
+
 }

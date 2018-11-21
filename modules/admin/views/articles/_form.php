@@ -18,7 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6, 'name' => "content"]) ?>
 
-    <?= $form->field($model, 'category_id')->dropDownList($listData, ['prompt' => 'Select...']) ?>
+    <?= $form->field($model, 'category_id')->dropDownList($categoryData, ['prompt' => 'Select...']) ?>
+
+    <?= $form->field($model, 'status')->dropDownList($statusData, ['prompt' => 'Select...']) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

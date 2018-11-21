@@ -33,11 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             [
-                'label' => 'user_id',
+                'label' => Yii::t('app', 'Users'),
+                'atribute' => 'user_id',
                 'value' => $model->user->username
             ],
             [
-                'label' => 'category_id',
+                'label' => Yii::t('app', 'Categories'),
+                'attribute' => 'category_id',
                 'value' => $model->category ? $model->category->title : null,
             ],
             'title',
@@ -45,11 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:ntext',
             'status',
             [
-                'label' => 'image',
+                'label' => Yii::t('app', 'Image'),
+                'attribute' => 'image',
                 'value' => $model->image
             ],
             [
-                'label' => 'tags',
+                'label' => Yii::t('app', 'tags'),
+                'attribute' => 'tags',
                 'value' => $model->getCurrentTags()
             ],
             'viewed',

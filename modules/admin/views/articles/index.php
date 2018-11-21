@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\Articles;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ArticlesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -30,14 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             [
-                'label' => 'User',
+                'label' => Yii::t('app', 'Users'),
                 'attribute' => 'user_id',
                 'value' => function($data) {
                     return $data->user->username;
                 }
             ],
             [
-                'label' => 'Category',
+                'label' => Yii::t('app', 'Categories'),
                 'attribute' => 'user_id',
                 'value' => function($data) {
                     return ($data->category) ? $data->category->title : null;
@@ -45,15 +47,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'content:ntext',
             [
-                'label' => 'status',
+                'label' => Yii::t('app', 'Status'),
+                'attribute' => 'status',
+                'filter' => Articles::getStatus(),
                 'value' => function($data) {
-                    $data2 = $data->getStatus();
-                    return $data2[$data->status];
-                }
+                    $status = Articles::getStatus();
+                    return $status[$data->status];
+                },
             ],
             [
+                'label' => Yii::t('app', 'Image'),
+                'attribute' => 'image',
                 'format' => 'html',
-                'label' => 'image',
                 'value' => function($data) {
                     return Html::img($data->getImage(), ['width' => 200]);
                 }

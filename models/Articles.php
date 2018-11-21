@@ -181,7 +181,7 @@ class Articles extends \yii\db\ActiveRecord
         return $model->getImageWithPath();
     }
 
-    public function getStatus()
+    public static function getStatus()
     {
         return [
             self::STATUS_ACTIVE => 'Active',

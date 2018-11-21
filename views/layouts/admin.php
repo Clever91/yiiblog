@@ -40,19 +40,19 @@ AdminAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/admin/default/index']],
-            ['label' => 'Articles', 'url' => ['/admin/articles/index']],
-            ['label' => 'Categories', 'url' => ['/admin/categories/index']],
-            ['label' => 'Tags', 'url' => ['/admin/tags/index']],
-            ['label' => 'Comments', 'url' => ['/admin/comments/index']],
-            // ['label' => 'Users', 'url' => ['/admin/user/index']],
+            ['label' => Yii::t('app', 'Home'), 'url' => ['/admin/default/index']],
+            ['label' => Yii::t('app', 'Articles'), 'url' => ['/admin/articles/index']],
+            ['label' => Yii::t('app', 'Categories'), 'url' => ['/admin/categories/index']],
+            ['label' => Yii::t('app', 'Tags'), 'url' => ['/admin/tags/index']],
+            ['label' => Yii::t('app', 'Comments'), 'url' => ['/admin/comments/index']],
+            // ['label' => Yii::t('app', 'Users'), 'url' => ['/admin/user/index']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/auth/login']]
+                ['label' => Yii::t('app', 'Login'), 'url' => ['/auth/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/auth/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    Yii::t('app', 'Logout ({0})', Yii::$app->user->identity->username),
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -74,7 +74,7 @@ AdminAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?= Yii::t('app', 'My Company {0}', date('Y')) ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

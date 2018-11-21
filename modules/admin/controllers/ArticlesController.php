@@ -9,7 +9,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\commons\UploadImage;
-use yii\helpers\ArrayHelper;
 use app\models\Categories;
 use app\models\Tags;
 
@@ -69,8 +68,8 @@ class ArticlesController extends Controller
     public function actionCreate()
     {
         $model = new Articles();
-        $categories = Categories::find()->all();
-        $listData = ArrayHelper::map($categories, 'id', 'title');
+        $categoryData = Categories::getAll();
+        $statusData = Articles::getStatus();
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -86,7 +85,8 @@ class ArticlesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'listData' => $listData
+            'categoryData' => $categoryData,
+            'statusData' => $statusData
         ]);
     }
 
@@ -100,8 +100,8 @@ class ArticlesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $categories = Categories::find()->all();
-        $listData = ArrayHelper::map($categories, 'id', 'title');
+        $categoryData = Categories::getAll();
+        $statusData = Articles::getStatus();
 
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -109,7 +109,8 @@ class ArticlesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'listData' => $listData
+            'categoryData' => $categoryData,
+            'statusData' => $statusData
         ]);
     }
 
@@ -165,7 +166,7 @@ class ArticlesController extends Controller
     public function actionSetCategory($id)
     {
         $model = $this->findModel($id);
-        $categories = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
+        $categories = Categories::getAll();
 
         if (Yii::$app->request->isPost) {
             $category = Yii::$app->request->post('category');
@@ -183,7 +184,7 @@ class ArticlesController extends Controller
     public function actionSetTags($id)
     {
         $model = Articles::findOne($id);
-        $tags = ArrayHelper::map(Tags::find()->all(), 'id', 'title');
+        $tags = Tags::getAll();
         $selectedTags = $model->getSelectedTags();
 
         if (Yii::$app->request->isPost) {
