@@ -21,9 +21,17 @@ INSTALLATION
 git clone this_repository
 ~~~
 
+### Composer update
+
+You need update composer so go to project/directory and run
+
+~~~
+composer update
+~~~
+
 ### Set web folder
 
-You can set domain
+You need set domain
 
 ~~~
 /to/your/path/yiiblog/web
@@ -33,7 +41,7 @@ in folder
 
 ### Install database 
 
-1. set name of database `config/web.php` file: 
+1. set config of database `config/web.php` file: 
 
 ```php
 return [
@@ -48,7 +56,7 @@ return [
 2. run migration command to domain root folder
 
 ~~~
-yii migrate up
+yii migrate
 ~~~
 
 ### i18n
