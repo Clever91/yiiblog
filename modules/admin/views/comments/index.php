@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'filter' => Comments::getStatus(),
                 'value' => function($data) {
-                    return Comments::getStatus()[$data->status];
+                    return $data->getStatusName();
                 },
             ],
             // 'text',

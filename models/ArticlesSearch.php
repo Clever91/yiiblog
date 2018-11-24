@@ -18,8 +18,8 @@ class ArticlesSearch extends Articles
     public function rules()
     {
         return [
-            [['id', 'user_id', 'category_id', 'viewed'], 'integer'],
-            [['title', 'description', 'content', 'status', 'image', 'updated', 'created'], 'safe'],
+            [['id', 'user_id', 'category_id', 'viewed', 'status'], 'integer'],
+            [['title', 'description', 'content', 'image', 'updated', 'created'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class ArticlesSearch extends Articles
             'user_id' => $this->user_id,
             'category_id' => $this->category_id,
             'viewed' => $this->viewed,
+            'status' => $this->status,
             'updated' => $this->updated,
             'created' => $this->created,
         ]);
@@ -70,7 +71,6 @@ class ArticlesSearch extends Articles
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;

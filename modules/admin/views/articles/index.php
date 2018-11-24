@@ -51,8 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'filter' => Articles::getStatus(),
                 'value' => function($data) {
-                    $status = Articles::getStatus();
-                    return $status[$data->status];
+                    return $data->getStatusName();
                 },
             ],
             [

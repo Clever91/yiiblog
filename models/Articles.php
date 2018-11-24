@@ -238,6 +238,11 @@ class Articles extends \yii\db\ActiveRecord
         return Url::toRoute(['/site/view', 'slug' => $this->slug]);
     }
 
+    public function getStatusName()
+    {
+        return self::getStatus()[$this->status];
+    }
+
 
     // ~~~~~~~~~~~~~~~~~~~~~ Delete Function ~~~~~~~~~~~~~~~~~~~~~
 
