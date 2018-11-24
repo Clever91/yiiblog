@@ -23,25 +23,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id',
             [
-                'label' => 'Users',
                 'attribute' => 'user_id',
                 'value' => function($data) {
                     return $data->user->username;
                 }
             ],
             [
-                'label' => 'Articles',
                 'attribute' => 'article_id',
                 'value' => function($data) {
                     return $data->article->title;
                 }
             ],
             [
-                'label' => 'Status',
                 'attribute' => 'status',
                 'filter' => Comments::getStatus(),
                 'value' => function($data) {
-                    return $data->getStatusName();
+                    return Comments::getStatus()[$data->status];
                 },
             ],
             // 'text',
