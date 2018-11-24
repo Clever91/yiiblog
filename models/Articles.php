@@ -8,6 +8,7 @@ use yii\helpers\Url;
 use app\models\Categories;
 use app\models\Tags;
 use yii\helpers\ArrayHelper;
+use app\components\SlugBehavior;
 
 /**
  * This is the model class for table "articles".
@@ -16,6 +17,7 @@ use yii\helpers\ArrayHelper;
  * @property int $user_id
  * @property int $category_id
  * @property string $title
+ * @property string $slug
  * @property string $description
  * @property string $content
  * @property int $status
@@ -47,9 +49,9 @@ class Articles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title', 'description', 'content'], 'required'],
+            [['user_id', 'title', 'description', 'content', 'slug'], 'required'],
             [['user_id', 'category_id', 'viewed', 'status'], 'integer'],
-            [['description', 'content'], 'string'],
+            [['slug', 'description', 'content'], 'string'],
             [['updated', 'created'], 'safe'],
             [['updated', 'created'], 'date', 'format' => 'php:Y-m-d H:i:s'],
             [['updated', 'created'], 'default', 'value' => date('Y-m-d H:i:s')],
@@ -70,6 +72,7 @@ class Articles extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'category_id' => Yii::t('app', 'Category ID'),
             'title' => Yii::t('app', 'Title'),
+            'slug' => Yii::t('app', 'Slug'),
             'description' => Yii::t('app', 'Description'),
             'content' => Yii::t('app', 'Content'),
             'status' => Yii::t('app', 'Status'),
@@ -79,6 +82,45 @@ class Articles extends \yii\db\ActiveRecord
             'created' => Yii::t('app', 'Created'),
         ];
     }
+
+    public function behaviors()
+    {
+        return [
+            'slug_behavior' => [
+                'class' => SlugBehavior::className(),
+                'input_attribute' => 'title',
+                'output_attribute' => 'slug',
+                'translate' => true,
+            ]
+        ];
+    }
+
+    public function beforeDelete() 
+    {
+        if (!parent::beforeDelete()) {
+            return false;
+        }
+
+        $model = new UploadImage($this->image);
+        $model->deleteImage();
+
+        return true;
+    }
+
+    public function beforeSave($insert) {
+
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->updated = date("Y-m-d H:i:s");
+
+        return true;
+    }
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~ Static Functions ~~~~~~~~~~~~~~~~~~~~~
+
 
     public static function getPopular($limit = 3)
     {
@@ -95,14 +137,17 @@ class Articles extends \yii\db\ActiveRecord
         return Categories::find()->all();
     }
 
+    public static function getStatus()
+    {
+        return [
+            self::STATUS_ACTIVE => 'Active',
+            self::STATUS_NO_ACTIVE => 'No Active'
+        ];
+    }
+
+
     // ~~~~~~~~~~~~~~~~~~~~~ Save Functions ~~~~~~~~~~~~~~~~~~~~~
 
-
-    public function saveArticle()
-    {
-        $this->user_id = Yii::$app->user->identity->id;
-        return $this->save();
-    }
 
     public function saveCategory($category_id)
     {
@@ -143,7 +188,9 @@ class Articles extends \yii\db\ActiveRecord
         $this->save(false);
     }
 
+
     // ~~~~~~~~~~~~~~~~~~~~~ Get Functions ~~~~~~~~~~~~~~~~~~~~~
+
 
     public function getCreated()
     {
@@ -181,18 +228,16 @@ class Articles extends \yii\db\ActiveRecord
         return $model->getImageWithPath();
     }
 
-    public static function getStatus()
-    {
-        return [
-            self::STATUS_ACTIVE => 'Active',
-            self::STATUS_NO_ACTIVE => 'No Active'
-        ];
-    }
-
     public function getAuthor()
     {
         return $this->user->name;
     }
+
+    public function getViewLink()
+    {
+        return Url::toRoute(['/site/view', 'id' => $this->id]);
+    }
+
 
     // ~~~~~~~~~~~~~~~~~~~~~ Delete Function ~~~~~~~~~~~~~~~~~~~~~
 
@@ -202,7 +247,14 @@ class Articles extends \yii\db\ActiveRecord
         ArticleTag::deleteAll(['article_id' => $this->id]);
     }
 
+
     // ~~~~~~~~~~~~~~~~~~~~~ Set Function ~~~~~~~~~~~~~~~~~~~~~
+
+
+    public function setAuthor()
+    {
+        $this->user_id = Yii::$app->user->identity->id;
+    }
 
     public function setStatusActive()
     {
@@ -220,7 +272,7 @@ class Articles extends \yii\db\ActiveRecord
     }
 
 
-    // ~~~~~~~~~~~~~~~~~~~~~ Relations Start ~~~~~~~~~~~~~~~~~~~~~
+    // ~~~~~~~~~~~~~~~~~~~~~ Relations ~~~~~~~~~~~~~~~~~~~~~
 
 
     public function getCategory()
@@ -241,35 +293,4 @@ class Articles extends \yii\db\ActiveRecord
         return $this->hasMany(Tags::className(), ['id' => 'tag_id'])->viaTable('article_tag', ['article_id' => 'id']);
     }
 
-    public function getViewLink()
-    {
-        return Url::toRoute(['/site/view', 'id' => $this->id]);
-    }
-
-
-    // ~~~~~~~~~~~~~~~~~~~~~ Extent Functions ~~~~~~~~~~~~~~~~~~~~~
-
-
-    public function beforeDelete() 
-    {
-        if (!parent::beforeDelete()) {
-            return false;
-        }
-
-        $model = new UploadImage($this->image);
-        $model->deleteImage();
-
-        return true;
-    }
-
-    public function beforeSave($insert) {
-
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
-
-        $this->updated = date("Y-m-d H:i:s");
-
-        return true;
-    }
 }

@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->category ? $model->category->title : null,
             ],
             'title',
+            'slug',
             'description:ntext',
             'content:ntext',
             'status',

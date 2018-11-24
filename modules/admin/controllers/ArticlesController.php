@@ -75,11 +75,10 @@ class ArticlesController extends Controller
 
             $model->setDefaultVieved();
             $model->setStatusActive();
+            $model->setAuthor();
 
-            if ($model->saveArticle()) {
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                print_r($model->getErrors()); exit();
             }
         }
 
@@ -103,7 +102,7 @@ class ArticlesController extends Controller
         $categoryData = Categories::getAll();
         $statusData = Articles::getStatus();
 
-        if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
