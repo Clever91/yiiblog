@@ -235,7 +235,7 @@ class Articles extends \yii\db\ActiveRecord
 
     public function getViewLink()
     {
-        return Url::toRoute(['/site/view', 'id' => $this->id]);
+        return Url::toRoute(['/site/view', 'slug' => $this->slug]);
     }
 
 

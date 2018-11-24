@@ -74,7 +74,7 @@ class SiteController extends Controller
 
         $pages = new Pagination([
             'totalCount' => $countQuery->count(),
-            'pageSize' => 3
+            'pageSize' => 5
         ]);
 
         $models = $query->offset($pages->offset)
@@ -87,9 +87,9 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($slug)
     {
-        $model = Articles::findOne($id);
+        $model = Articles::find()->where(['slug' => $slug])->one();
 
         if (is_null($model))
             return $this->goHome();
@@ -134,7 +134,7 @@ class SiteController extends Controller
         {
             Yii::$app->session->setFlash('success', "Your coment is saved successfully");
 
-            return $this->redirect(['/site/view', 'id' => $comment->article_id]);
+            return $this->redirect([$comment->article->getViewLink()]);
         }
 
         return $this->goBack();
@@ -149,7 +149,7 @@ class SiteController extends Controller
 
         $pages = new Pagination([
             'totalCount' => $countQuery->count(),
-            'pageSize' => 1
+            'pageSize' => 5
         ]);
 
         $models = $query->offset($pages->offset)
@@ -175,7 +175,7 @@ class SiteController extends Controller
 
         $pages = new Pagination([
             'totalCount' => $countQuery->count(),
-            'pageSize' => 1
+            'pageSize' => 5
         ]);
 
         $models = $query->offset($pages->offset)
